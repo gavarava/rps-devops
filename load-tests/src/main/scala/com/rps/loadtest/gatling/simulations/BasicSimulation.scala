@@ -9,11 +9,11 @@ import io.gatling.http.protocol.HttpProtocolBuilder.toHttpProtocol
 class BasicSimulation extends Simulation with StrictLogging {
 
   val applicationRootHttp = toHttpProtocol(http
-    .baseUrl("http://localhost"))
+    .baseUrl("http://localhost:8080"))
 
   val playerNameFeeder = Iterator.continually(Map("player" -> Random.alphanumeric.take(20).mkString))
 
-  val createPlayerScenario = scenario("Create Player")
+  val registerPlayerScenario = scenario("Create Player")
     .exec(http("request_1")
       .put("/rockpaperscissors/player/" + feed(playerNameFeeder)))
 

@@ -8,14 +8,15 @@ cd environment
 docker-compose up -d
 ```
 ## Run Load Tests using Gatling
+Check [load-tests/README.md](load-tests/README.md) for test scenarios
 ```
 cd load-tests
 mvn gatling:test
 ```
 ## Monitoring using Grafana & Prometheus
 ```
-cd load-tests
-mvn gatling:test
+cd monitoring
+docker-compose up -d
 ```
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

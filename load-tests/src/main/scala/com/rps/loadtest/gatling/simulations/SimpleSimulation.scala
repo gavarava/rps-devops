@@ -7,8 +7,9 @@ import scala.concurrent.duration.DurationInt
 class SimpleSimulation extends BasicSimulation {
   // Use this setUp to test the scenarios with single users
   setUp(
-    createPlayerScenario.inject(
-      atOnceUsers(10000),
+    registerPlayerScenario
+      .inject(
+      atOnceUsers(500),
     ).protocols(applicationRootHttp)
   ).maxDuration(1 minutes)
 }
