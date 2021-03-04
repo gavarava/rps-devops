@@ -6,10 +6,10 @@ import scala.concurrent.duration.DurationInt
 
 class SimpleSimulation extends BasicSimulation {
   setUp(
-    registerPlayers
+    registerPlayersAndStartSession
       .inject(
-      atOnceUsers(10),
+      atOnceUsers(1500),
     ).protocols(applicationRootHttp)
-  ).maxDuration(1 minutes)
+  ).maxDuration(2 minutes)
 
 }

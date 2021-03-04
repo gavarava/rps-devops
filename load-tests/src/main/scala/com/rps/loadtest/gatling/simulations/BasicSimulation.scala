@@ -22,11 +22,24 @@ class BasicSimulation extends Simulation with StrictLogging {
     .exec(registerPlayer("Player1", playerNameFeeder))
     .exec(registerPlayer("Player2", playerNameFeeder))
 
+  val registerPlayersAndStartSession = scenario("Register & Start Session")
+    .exec(registerPlayer("Player1", playerNameFeeder))
+    .exec(registerPlayer("Player2", playerNameFeeder))
+    .exec(startSession("Player1"))
+
   def registerPlayer(playerIdentity: String, feeder: Feeder[Any]): ChainBuilder = {
     feed(feeder)
       .exec(savePlayerName(playerIdentity))
       .exec(http("RegisterPlayer")
         .put(session => "/rockpaperscissors/player/" + session(playerIdentity).as[String].toLowerCase))
+  }
+
+  def startSession(playerIdentity: String): ChainBuilder = {
+    exec(savePlayerName(playerIdentity))
+      .exec(http("RegisterPlayer")
+        .post("/rockpaperscissors/start")
+        .header("Content-Type", "application/json")
+        .body(StringBody("""{"player": "${""" + playerIdentity + """}"}""")))
   }
 
   def savePlayerName(playerIdentity: String): ChainBuilder = {
