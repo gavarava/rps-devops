@@ -14,6 +14,11 @@ cd load-tests
 mvn gatling:test
 ```
 ## Monitoring using Grafana & Prometheus
+#### Create volume for Grafana Storage
+```
+docker volume create grafana-storage
+```
+#### Run monitoring containers
 ```
 cd monitoring
 docker-compose up -d
