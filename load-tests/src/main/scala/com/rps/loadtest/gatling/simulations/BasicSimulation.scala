@@ -5,24 +5,24 @@ import io.gatling.core.Predef._
 import io.gatling.core.feeder.Feeder
 import io.gatling.core.structure.{ChainBuilder, ScenarioBuilder}
 import io.gatling.http.Predef.http
+import io.gatling.http.protocol.HttpProtocol
 import io.gatling.http.protocol.HttpProtocolBuilder.toHttpProtocol
 
-import java.util.concurrent.ConcurrentLinkedQueue
 import scala.util.Random
 
 class BasicSimulation extends Simulation with StrictLogging {
 
-  val applicationRootHttp = toHttpProtocol(http
+  val applicationRootHttp: HttpProtocol = toHttpProtocol(http
     .baseUrl("http://localhost:8080"))
 
-  val playerNameFeeder = Iterator.continually(Map("playerName" -> Random.alphanumeric.take(20).mkString))
+  val playerNameFeeder: Iterator[Map[String, String]] = Iterator.continually(Map("playerName" -> Random.alphanumeric.take(20).mkString))
 
 
-  val registerPlayers = scenario("Register Player")
+  val registerPlayers: ScenarioBuilder = scenario("Register Player")
     .exec(registerPlayer("Player1", playerNameFeeder))
     .exec(registerPlayer("Player2", playerNameFeeder))
 
-  val registerPlayersAndStartSession = scenario("Register & Start Session")
+  val registerPlayersAndStartSession: ScenarioBuilder = scenario("Register & Start Session")
     .exec(registerPlayer("Player1", playerNameFeeder))
     .exec(registerPlayer("Player2", playerNameFeeder))
     .exec(startSession("Player1"))

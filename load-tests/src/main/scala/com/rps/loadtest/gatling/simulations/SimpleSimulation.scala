@@ -1,6 +1,6 @@
 package com.rps.loadtest.gatling.simulations
 
-import io.gatling.core.Predef.{atOnceUsers, feed, nothingFor, openInjectionProfileFactory}
+import io.gatling.core.Predef.{atOnceUsers, openInjectionProfileFactory}
 
 import scala.concurrent.duration.DurationInt
 
