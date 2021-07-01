@@ -15,8 +15,6 @@
     <maven.compiler.target>${jdk.version}</maven.compiler.target>
     <maven.compiler.source>${jdk.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <gatling.version>3.4.1</gatling.version>
-    <gatling-plugin.version>3.1.0</gatling-plugin.version>
     <scala-maven-plugin.version>4.4.0</scala-maven-plugin.version>
     <simulationClass>com.rps.loadtest.gatling.simulations.SimpleSimulation</simulationClass>
   </properties>
@@ -25,7 +23,7 @@
     <dependency>
       <groupId>io.gatling.highcharts</groupId>
       <artifactId>gatling-charts-highcharts</artifactId>
-      <version>${gatling.version}</version>
+      <version>3.5.0</version>
     </dependency>
   </dependencies>
 
@@ -58,7 +56,7 @@
       <plugin>
         <groupId>io.gatling</groupId>
         <artifactId>gatling-maven-plugin</artifactId>
-        <version>${gatling-plugin.version}</version>
+        <version>3.1.2</version>
         <configuration>
           <configFolder>src/main/resources</configFolder>
           <resultsFolder>target/gatling/results</resultsFolder>

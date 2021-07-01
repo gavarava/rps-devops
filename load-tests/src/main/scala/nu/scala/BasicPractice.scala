@@ -35,7 +35,8 @@ object BasicPractice {
     println("computeSumOnFunction = " + computeSumOnFunction(cube, 4, 3))
 
     // Creating stream
-    val stream = 1 #:: 2 #:: 8 #:: Stream.empty
+    val stream = 1 #:: 2 #:: 8 #:: LazyList.empty
+    // Use LazyList instead of Stream
 
   }
 }
