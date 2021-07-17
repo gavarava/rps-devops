@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+
+  postgres:
+    hostname: postgres.db
+    image: postgres:11.2
+    volumes:
+      - ./postgresql.conf:/etc/postgresql.conf
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    ports:
+      - 5432:5432

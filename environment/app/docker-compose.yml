@@ -1,0 +1,17 @@
+version: '3.3'
+
+
+services:
+
+  rps-app-server:
+    env_file: env.dev
+    image: edekargaurav88/rps2:1.4
+    container_name: app-server
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_URL=jdbc:postgresql://${HOST}:5432/postgres
+      - SPRING_PROFILES_ACTIVE=prod,liquibase
+    ports:
+      - 8080:8080
+      - 8091:8091

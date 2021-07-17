@@ -15,7 +15,7 @@ class OpenWorkloadSimulation extends BasicSimulation {
         .times(5)
         .eachLevelLasting(10.seconds)
         .separatedByRampsLasting(10.seconds)
-        .startingFrom(10) // Double
+        .startingFrom(50) // Double
     ).protocols(applicationRootHttp)
   ).assertions(
     global.responseTime.max.lt(50),
