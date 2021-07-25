@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rps-application
+  namespace: development
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: rps-app
+  template:
+    metadata:
+      namespace: development
+      name: rps-app
+      labels:
+        run: rps-app
+    spec:
+      hostname: rps-app
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet # WHAT ?
+      restartPolicy: Always
+      containers:
+        - image: edekargaurav88/rps2:1.4
+          name: rps-app
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "200Mi"
+            requests:
+              memory: "100Mi"
+          ports:
+            - containerPort: 8080
+              hostPort: 8080
+              name: http
+            - containerPort: 8091
+              hostPort: 8091
+              name: metrics
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_URL
+              value: jdbc:postgresql://192.168.10.213:5432/postgres
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod,liquibase
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8091
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8091
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
