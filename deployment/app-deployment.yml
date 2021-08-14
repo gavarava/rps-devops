@@ -1,23 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rps-application
-  namespace: development
+  labels:
+    app: rps-app # Deployment manages the pods with these labels
+  name: rps-app-deployment
 spec:
   replicas: 2
   selector:
-    matchLabels:
-      run: rps-app
+    matchLabels: # This replicaSet manages the pods with these labels
+      app: rps-app
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
-      namespace: development
-      name: rps-app
       labels:
-        run: rps-app
+        app: rps-app
+      name: rps-app-deployment
     spec:
       hostname: rps-app
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet # WHAT ?
       restartPolicy: Always
       containers:
         - image: edekargaurav88/rps2:1.4
@@ -25,15 +29,17 @@ spec:
           imagePullPolicy: Always
           resources:
             limits:
-              memory: "200Mi"
+              cpu: "1"
+              memory: 512M
             requests:
-              memory: "100Mi"
+              cpu: "0.5"
+              memory: 256M
           ports:
             - containerPort: 8080
-              hostPort: 8080
+              #hostPort: 8080
               name: http
             - containerPort: 8091
-              hostPort: 8091
+              #hostPort: 8091
               name: metrics
           env:
             - name: POSTGRES_USER
@@ -41,7 +47,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: postgres
             - name: POSTGRES_URL
-              value: jdbc:postgresql://192.168.10.213:5432/postgres
+              value: jdbc:postgresql://192.168.10.220:5432/postgres
             - name: SPRING_PROFILES_ACTIVE
               value: prod,liquibase
           livenessProbe:

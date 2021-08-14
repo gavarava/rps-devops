@@ -1,46 +1,47 @@
 # Deployment using k8s
 
-`kubectl create -f namespace-dev.json`
-`kubectl apply -f service.yml`
+`kubectl create -f namespace-dev.json`</br>
+`kubectl apply -f service.yml`</br>
+- Cluster
+  Health Check: `kubectl cluster-info`
+- Node Commands
+NODE STATUS: `kubectl get nodes`</br>
+NODE DETAILS: `kubectl describe nodes`</br>
+GET ReplicaSet: `kubectl get replicaset`
 
+- Node Cordon / Uncordon
+  `kubectl cordon docker-desktop` </br>
+  `kubectl uncordon docker-desktop`
 - Expose
-`kubectl expose deployment/rps-deployment`
-`kubectl expose service/rps-app --namespace development`
+`kubectl expose deployment/rps-deployment`</br>
+`kubectl expose service/rps-app --namespace development`</br>
 - Get pods
-  `kubectl get pods --namespace development`
+  `kubectl get all --namespace development`</br>
+  `kubectl get all -n development`</br>
+  `kubectl get pods --namespace development`</br>
   
 - Describe Pod - To check what failed with this POD
-  `kubectl describe pod rps-application-75f475c44d-bpzr7 --namespace development`
+  `kubectl describe pod rps-app-deployment-55bf9f757d-8hclt --namespace development`</br>
+- Examining pod logs
+  `kubectl logs ${POD_NAME} ${CONTAINER_NAME}`</br>
+- Debugging with container exec
+  `kubectl exec ${POD_NAME} -c ${CONTAINER_NAME} -- ${CMD} ${ARG1} ${ARG2} ... ${ARGN}`
+- Check resources allocated
+  `kubectl get resourcequota rps-app-deployment-55bf9f757d-w2tb5 -n development --output=yaml`
 - Get services
 `kubectl get services`
 - Expose services
-`kubectl expose deployment/rps-application --namespace development`
-`kubectl expose service/rps-app --namespace=development --type=LoadBalancer --name=rps-service`
+`kubectl expose deployment/rps-application --namespace development`</br>
+`kubectl expose service/rps-app --namespace=development --type=LoadBalancer --name=rps-service`</br>
 - Get Pod IP ADDRESS
-`kubectl get pods -l run=rps-app -o yaml | grep podIP`
-  `kubectl get pods --namespace development -l run=rps-app -o yaml | grep podIP`
-- Get Pod
+`kubectl get pods -l run=rps-app -o yaml | grep podIP`</br>
+`kubectl get pods --namespace development -l run=rps-app -o yaml | grep podIP`</br>
+- Get Pod - wide information with IP Address
   `kubectl get pods --output=wide`
 - Get all deployments
   `kubectl get deployments --all-namespaces`
   
-- WARNING delete
-  `kubectl delete --all services --all-namespaces`
-  `kubectl delete deployment.apps/rps-deployment --namespace development`
-  `kubectl exec -ti dnsutils --nslookup rps-app`
----
-`
-gauravedekar@Gauravs-MBP deployment % kubectl get svc --namespace=development
-NAME              TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
-rps-application   ClusterIP      10.106.217.189   <none>        8080/TCP,8091/TCP   16m
-rps-deployment    ClusterIP      10.109.88.147    <none>        8080/TCP,8091/TCP   4h52m
-rps-service       LoadBalancer   10.104.197.110   localhost     80:32191/TCP        3h47m
-`
-
-
-
-- What is difference b/w Service - deployment and POD ?
-- How to expose port of a pod ?
-  - https://kubernetes.io/docs/concepts/services-networking/service/
-    To get stuff out in the open use a service
-- Does every pod get a domain name ?
+- WARNING delete</br>
+  `kubectl delete --all services --all-namespaces`</br>
+  `kubectl delete deployment.apps/rps-deployment --namespace development`</br>
+  `kubectl exec -ti dnsutils --nslookup rps-app`</br>

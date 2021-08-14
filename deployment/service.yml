@@ -2,11 +2,18 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rps-app
-  namespace: development
 spec:
+  allocateLoadBalancerNodePorts: true # default
   selector:
-    run: rps-app
+    app: rps-app
+  type: NodePort # LoadBalancer with external access how ?
   ports:
     - protocol: TCP
-      port: 80
+      port: 8080
       targetPort: 8080
+      name: app
+    - protocol: TCP
+      port: 8091
+      targetPort: 8091
+      name: health
+
