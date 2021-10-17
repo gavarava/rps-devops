@@ -25,6 +25,11 @@
       <artifactId>gatling-charts-highcharts</artifactId>
       <version>3.5.0</version>
     </dependency>
+    <dependency>
+      <groupId>com.softwaremill.sttp.client3</groupId>
+      <artifactId>core_3</artifactId>
+      <version>3.3.15</version>
+    </dependency>
   </dependencies>
 
   <build>
