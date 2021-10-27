@@ -41,12 +41,12 @@ object CsvToJsonConverter {
   def main(args: Array[String]): Unit = {
     val FILE_URI = "https://raw.githubusercontent.com/" +
       "MatthiasWinkelmann/firstname-database/master/firstnames.csv"
+    
     val fileAsString = readFile(FILE_URI)
-
     val csvFileAsArray = fileAsString.split(ROW_SEPARATOR)
     println("Found Rows in File = " + csvFileAsArray.size)
+    
     val namesList = csvFileAsArray.map(extractNameFromRow)
-
     val start = "{\"names\":[\""
     val end = "\"]}"
     val namesJson = namesList.patch(0, Nil, 1).mkString(start, "\",\"", end)

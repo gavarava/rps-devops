@@ -8,7 +8,7 @@ object ListTest {
 
   def main(args: Array[String]): Unit = {
 
-    val list = 1 :: (2 :: (2 :: (1 :: Nil)))
+    val list = 99 :: (8 :: (2 :: (1 :: Nil)))
 
     println("Last Element = " + list.last)
     println("Last But one Element = " + list.reverse.tail.reverse.last)
